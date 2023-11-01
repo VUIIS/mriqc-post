@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get -y update && \
-    apt-get -y install python-is-python3 && \
+    apt-get -y install python-is-python3 pip && \
     apt-get clean
 
 RUN pip install fpdf
