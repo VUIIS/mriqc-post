@@ -2,8 +2,6 @@
 
 ### Script for mriqc docker container
 # Dylan Lawless
-# Usage: run_mriqc: [--bidsdir] [--outdir] [--wrkdir] [--label_info]
-
 
 # Initialize defaults
 export outdir=/OUTPUTS

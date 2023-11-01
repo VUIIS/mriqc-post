@@ -86,4 +86,4 @@ for folder in glob.glob('sub-*/ses-*/*'):
 
 
 # Finalize pdf
-pdf.output(fldrs[0] + '_' + fldrs[1] + '_MRIQC_IQMs.pdf','F')
+pdf.output('MRIQC_IQMs.pdf','F')
