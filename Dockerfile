@@ -6,8 +6,9 @@ RUN apt-get -y update && \
 
 RUN pip install fpdf
 
-COPY convert_outputs.py /opt/mriqc-post/
-COPY mriqc_post.sh /opt/mriqc_post/
+RUN mkdir /opt/mriqc-post
+COPY convert_outputs.py /opt/mriqc-post
+COPY mriqc_post.sh /opt/mriqc-post
 
 ENV PATH="/opt/mriqc-post:$PATH"
     

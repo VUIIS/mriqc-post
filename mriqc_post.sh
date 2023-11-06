@@ -5,6 +5,10 @@
 
 # Initialize defaults
 export outdir=/OUTPUTS
+export project=
+export subject=
+export session=
+export scan=
 
 # Parse options
 while [[ $# -gt 0 ]]; do
@@ -26,7 +30,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 #Convert outputs
-cd ${outdir}
+cd "${outdir}"
 
 #Run py scripts to convert outputs
 /opt/xnatwrapper/convert_outputs.py
