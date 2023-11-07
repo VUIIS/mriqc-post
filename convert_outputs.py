@@ -40,10 +40,8 @@ else:
 	pdf.cell(page_width,0.0,'No XNAT Label Provided',align='C')
 pdf.ln(8)
 
-# Write MRIQC version to header
-version = os.environ["version"]
-
-pdf.cell(page_width,0.0,'MRIQC Version ' + version,align='C')
+# Write header
+pdf.cell(page_width,0.0,'MRIQC')
 pdf.ln(8)
 
 # Get current time and write to header
