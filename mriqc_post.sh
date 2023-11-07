@@ -33,4 +33,4 @@ done
 cd "${outdir}"
 
 #Run py scripts to convert outputs
-/opt/xnatwrapper/convert_outputs.py
+convert_outputs.py
