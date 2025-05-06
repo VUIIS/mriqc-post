@@ -1,0 +1,70 @@
+---
+procyamlversion: 3.0.0-dev.0
+
+description: mriqc - https://mriqc.readthedocs.io/en/stable/
+jobtemplate: job_template_v3.txt
+
+containers:
+  - name: mriqc
+    path: mriqc_23.1.0.sif
+    source: docker://nipreps/mriqc:23.1.0
+  - name: mriqc-post
+    path: mriqc-post_v1.0.3.sif
+    source: docker://baxterprogers/mriqc-post:v1.0.3
+
+requirements:
+  walltime: 3-0
+  memory: 16000
+
+inputs:
+  xnat:
+    scans:
+      - name: scan_fmri
+        types: SteadyR_fMRI
+        resources:
+          - {resource: NIFTI, fmatch: '*.nii.gz', fdest: bold.nii.gz, ftype: FILE}
+
+    attrs:
+      - {varname: project, object: assessor, attr: project}
+      - {varname: subject, object: session, attr: subject_label}
+      - {varname: session, object: session, attr: label}
+      - {varname: scan, object: scan, attr: ID, ref: scan_fmri}
+
+outputs:
+  - {path: MRIQC_IQMs.pdf, type: FILE, resource: PDF}
+  - {path: HTML, type: DIR, resource: HTML}
+  - {path: bids, type: DIR, resource: BIDS}
+  - {path: STATS, type: DIR, resource: STATS}
+
+command:
+  type: singularity_exec
+  container: mriqc
+  args: >-
+        bash -c \"
+        mkdir -p /INPUTS/BIDS_DATA/sub-{subject}/ses-{session}/func && 
+        mv /INPUTS/bold.nii.gz 
+          /INPUTS/BIDS_DATA/sub-{subject}/ses-{session}/func/sub-{subject}_ses-{session}_task-task_bold.nii.gz &&  
+        echo '{{\\\"Name\\\": \\\"vuiisxnat-mriqc\\\", \\\"BIDSVersion\\\": \\\"1.7.0\\\"}}' 
+          > /INPUTS/BIDS_DATA/dataset_description.json &&
+        mkdir /OUTPUTS/bids && 
+        mriqc -m bold --no-sub /INPUTS/BIDS_DATA /OUTPUTS/bids participant
+        \"
+
+post:
+  type: singularity_exec
+  container: mriqc-post
+  args: >-
+      bash -c \"
+      mriqc_post.sh
+        --outdir /OUTPUTS/bids
+        --project {project}
+        --subject {subject}
+        --session {session}
+        --scan {scan} &&
+      mkdir /OUTPUTS/STATS &&
+      mv /OUTPUTS/bids/sub-{subject}/ses-{session}/func/*.csv /OUTPUTS/STATS &&
+      mv /OUTPUTS/bids/MRIQC_IQMs.pdf /OUTPUTS &&
+      mkdir -p /OUTPUTS/HTML/sub-{subject}/figures &&
+      cp /OUTPUTS/bids/*.html /OUTPUTS/HTML &&
+      cp /OUTPUTS/bids/sub-{subject}/figures/* /OUTPUTS/HTML/sub-{subject}/figures
+      \"
