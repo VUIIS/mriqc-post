@@ -11,7 +11,7 @@ containers:
 
 requirements:
   walltime: 0-4
-  memory: 8000
+  memory: 16000
 
 inputs:
   xnat:
