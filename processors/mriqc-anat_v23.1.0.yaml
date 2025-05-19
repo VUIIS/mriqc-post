@@ -51,7 +51,7 @@ post:
   container: mriqc
   args: >-
       bash -c \"
-      curl -o mriqc-post.tar.gz -L https://github.com/VUIIS/mriqc-post/archive/refs/tags/v2.0.0.tar.gz &&
+      curl -o mriqc-post.tar.gz -L https://github.com/baxpr/mriqc-post/archive/refs/tags/v2.0.0.tar.gz &&
       tar -zxf mriqc-post.tar.gz &&
       export PATH=/INPUTS/mriqc-post-2.0.0/scripts:\$PATH &&
       mkdir -p /OUTPUTS/STATS &&
