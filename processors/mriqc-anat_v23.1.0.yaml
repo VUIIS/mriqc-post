@@ -8,6 +8,9 @@ containers:
   - name: mriqc
     path: mriqc_23.1.0.sif
     source: docker://nipreps/mriqc:23.1.0
+  - name: mriqc-post
+    path: mriqc-post_v1.0.3.sif
+    source: docker://baxterprogers/mriqc-post:v1.0.3
 
 requirements:
   walltime: 0-4
