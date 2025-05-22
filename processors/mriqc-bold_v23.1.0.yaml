@@ -57,7 +57,7 @@ post:
       cd /INPUTS &&
       curl -o mriqc-post.tar.gz -L https://github.com/baxpr/mriqc-post/archive/refs/tags/v2.0.0.tar.gz &&
       tar -zxf mriqc-post.tar.gz &&
-      export PATH=/INPUTS/mriqc-post-2.0.0:\$PATH &&
+      export PATH=/INPUTS/mriqc-post-2.0.0:\\\$PATH &&
       mkdir -p /OUTPUTS/STATS &&
       convert_stats.py
         --bids_dir /OUTPUTS/bids
