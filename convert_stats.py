@@ -23,4 +23,5 @@ json_data.pop('bids_meta');
 json_data.pop('provenance');
 
 csv_data = pandas.DataFrame(json_data, index=[0])
-csv_data.to_csv(f'{args.out_dir}/mriqc.csv')
+csv_data.to_csv(f'{args.out_dir}/mriqc.csv', index=False)
+
